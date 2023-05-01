@@ -17,6 +17,10 @@
         void print(){
             std::cout << x << " ";
         }
+        
+        void length(){
+            std::cout << x.size() << "\n";
+        }
         bool neg(BIG a){
             if (a.x.at(0)=='-')
                 return true;
@@ -46,32 +50,36 @@
             int i,j;
             i = this->x.size();
             j = a.x.size();
-            
+
             if (this->x==a.x)
                 return true;
             if (!neg()&&!neg(a)){
                 if (i<j)
                     return true;
                 else if (i>j) return false;
-                // if they are equal in length
                 for (int z=0;z<i;z++){
-                    if (this->x.at(z)<a.x.at(z))
+                    int prvi, drugi;
+                    prvi = this->x.at(z) - '0';
+                    drugi = a.x.at(z) - '0';
+                    if (prvi<drugi)
                         return true;
-                    else if (this->x.at(z)>a.x.at(z) - '0') return false;
+                    else if (prvi>drugi) return false;
                 }
             }
-            if (neg()&&!neg(a)) // exor
+            if (neg()&&!neg(a)) 
                 return true;
             if (!neg()&&neg(a))
                 return false;
             if (neg()&&neg(a)){
                 if (i<j) return false;
                 else if (i>j) return true;
-                // if they are equal in length
                 for (int z=1;z<i;z++){
-                   if (this->x.at(z)<a.x.at(z))
+                    int prvi, drugi;
+                    prvi = this->x.at(z) - '0';
+                    drugi = a.x.at(z) - '0';
+                   if (prvi<drugi)
                         return true;
-                    else if (this->x.at(z)>a.x.at(z)) return false;
+                    else if (prvi>drugi) return false;
                 }
             }
             
@@ -226,8 +234,8 @@
                     else drugi = 0;
                 }
                 prvi -= prenos;
-                
                 prenos = 0;
+                
                 if (prvi<drugi){
                     prvi+=10;
                     prenos = 1;
@@ -368,8 +376,6 @@
                 a.strip();
                 pljus = true;
             }
-            
-            BIG b = a.x;
 
             // - & -
             // + & + 
@@ -380,13 +386,13 @@
                 
                 s.x+=this->x.at(i);
                 
-                
                 tmp.x.clear();
 
                 for (int j=1;j<=9;j++){
                     pom.x=std::to_string(j);
-                    pro = b*pom;
-                    if(neg(s-pro)){
+                    pro = a*pom;
+                    BIG prox = s-pro;
+                    if(neg(prox)){
                         break;
                     }
                     else {
@@ -395,7 +401,7 @@
                     }
                 }
                 if (dali) {
-                    s = s-b*tmp;
+                    s = s-a*tmp;
                     dali = false;
                 }
             
@@ -418,16 +424,24 @@
             return y;
         }
         
+        // TO DO:
+        
+        // modulo
+        // rais to the power
+        // square root
+        // Convert an integer to a big integer.
+        
     };
     
 
     
     int main() {
-        BIG x {"-134"};
-        BIG y {"-7"};
+        BIG x {"256"};
+        BIG y {"13"};
+        
         
         BIG z;
-        
+
 
         z = x + y;
         z.print();
@@ -441,6 +455,7 @@
         z = x / y;
         z.print();
         std::cout << "/\n";
+
     
         return 0;
     }

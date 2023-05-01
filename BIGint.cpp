@@ -429,23 +429,98 @@
         // TO DO:
         
         // modulo
+        BIG operator%(BIG a){
+            BIG y,s,tmp,pom;
+            
+            BIG pro;
+            
+            int i = 0;
+            bool dali = false;
+    
+            
+            if (a.x == "0"){
+                std::cout << "Smooth move, but i'm afraid we cannot divide by zero...\n";
+                return y;
+            }
+            
+            if (neg()!=neg(a.x)){
+                strip();
+                a.strip();
+            }
+            
+            while (true){
+                if (i>this->x.size()-1)
+                    break;
+                
+                s.x+=this->x.at(i);
+                
+                
+                tmp.x.clear();
+
+                for (int j=1;j<=9;j++){
+                    pom.x=std::to_string(j);
+                    pro = a*pom;
+                    if(neg(s-pro)){
+                        break;
+                    }
+                    else {
+                        tmp=std::to_string(j);
+                        dali = true;
+                    }
+                }
+                if (dali) {
+                    s = s-a*tmp;
+                    dali = false;
+                }
+                
+                i++;
+                    
+            }
+            
+            y=s;
+            
+            unstrip();
+            a.unstrip();
+            
+            if (y.x.size()>1)
+                if (y.x.at(0)=='0')
+                    y.x.erase(y.x.begin()+0);
+
+            return y;
+            
+        }
         
-        
-        // rais to the power
-        // square root
+        // raise to the power
+        BIG operator^(int a){
+            BIG y = *this;
+            bool sign = false;
+            
+            for(int i=0;i<a-1;i++)
+                y = y*(*this);
+            return y;
+        }
         // Convert an integer to a big integer.
+        void operator=(int a){
+            this->x.clear();
+            int i = 10, b;
+            while (a/i){
+                this->x+=std::to_string(a%i);
+                a = a/i;
+                //std::cout << a << "\n";
+            }
+            this->x+=std::to_string(a%i);
+            std::reverse(this->x.begin(),this->x.end());
+        }
+        // square root
         
     };
-    
-
     
     int main() {
         BIG x {"256"};
         BIG y {"-13"};
-        
+        BIG c {"-2"};
         
         BIG z;
-
 
         z = x + y;
         z.print();
@@ -460,8 +535,17 @@
         z.print();
         std::cout << "/\n";
         
-
-
-    
+        z = x % y;
+        z.print();
+        std::cout << "%\n";
+        
+        z = c^16;
+        z.print();
+        std::cout << "^\n";
+        
+        z = 21343;
+        z.print();
+        std::cout << "int -> BIGint\n";
+        
         return 0;
     }

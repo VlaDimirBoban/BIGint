@@ -201,6 +201,7 @@
             // + & - 
             if (!neg()&&neg(a)){
                 a.strip();
+                a.unstrip();
                 return *this+a;
             }
             // - & +
@@ -421,12 +422,15 @@
             unstrip();
             a.unstrip();
 
+
             return y;
         }
         
         // TO DO:
         
         // modulo
+        
+        
         // rais to the power
         // square root
         // Convert an integer to a big integer.
@@ -437,7 +441,7 @@
     
     int main() {
         BIG x {"256"};
-        BIG y {"13"};
+        BIG y {"-13"};
         
         
         BIG z;
@@ -455,6 +459,8 @@
         z = x / y;
         z.print();
         std::cout << "/\n";
+        
+
 
     
         return 0;

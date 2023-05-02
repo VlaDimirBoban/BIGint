@@ -539,62 +539,72 @@
             while (i<length()){
                 if (odd){
                     s.x+=x.at(i);
-                    odd = false;
                     i++;
+                }
+                else {
+                    s.x+=x.at(i);
+                    i++;
+                    s.x+=x.at(i);
+                    i++; 
+                }
+                
+                std::cout << s.x << "\n";
+                
+                if (s.length()<3){
                     for (int i=1;i<10;i++){
-                    d = i;
-                    d = d^2;
-                    if (neg(s-d)){
-                            pom = s-d;
-                            //std::cout << d.x << "\n";
-                            //std::cout << "Upad\n";
-                            //std::cout << pom.x << "\n";
-                            d = (i-1);
-                            //std::cout << "dick je: " << d.x << "\n";
-                            y = d;
+                        std::cout << "Polecemo!" << "\n";
+                            d = i;
+                            d = d^2;
+                            if (neg(s-d)){
+                                pom = s-d;
+                                //std::cout << d.x << "\n";
+                                //std::cout << "Upad\n";
+                                //std::cout << pom.x << "\n";
+                                d = (i-1);
+                                //std::cout << "dick je: " << d.x << "\n";
+                                y = d;
+                                c = d*d;
+                                s = s - c; // ono sto se deli
+                                break;
+                            }
+                    }
+                }
+                else{
+                    
+                    std::cout << "C: " << c.x << "\n";
+                    std::cout << "s: " << s.x << "\n";
+                    
+                    s.Zero();
+                    std::cout << "S je: " << s.x << "\n";
+                    
+                    if (i)
+                    d = d + y;
+                    
+                    
+                    for (int i=0;i<10;i++){
+                        c = i;
+                        pom.x = d.x + c.x;
+                        //std::cout << "Proba boba: " << pom.x << "\n";
+                        //std::cout << "S je: " << s.x << "\n";
+                        pom = s - pom*c;
+                        //std::cout << "Rezultati: " << pom.x << "\n";
+                        if (pom.x=="0"){
+                            y.x+=std::to_string(i);
+                            //std::cout << "HEHE BOI" << i << "\n";
+                            break;
+                        }
+                        if (neg(pom)){
+                            y.x+=std::to_string(i-1);
                             break;
                         }
                     }
                 }
-                c = d*d;
-                //std::cout << "Dick squared " << d.x << "\n";
-                s = s - c; // ono sto se deli
-                //std::cout << "S je: " << s.x << "\n";
-                // S/(broj ciji je kvadrat <= s; znaci od 1-9) || cirkus za sad, chill
-                // delimo brojem ciji je kvadrat manji ili jednak sa prvim parom
-                // saberemo delitelj i koeficijent, dodamo jednu cifru na dupe koja je ista sa sledecim koeficijentom
-                // ponovimo proces.
                 
-                s.x+=x.at(i);
-                i++;
-                s.x+=x.at(i);
-                i++;
-                
-                s.Zero();
-                //std::cout << "S je: " << s.x << "\n";
-                
-                d = d + y;
-                
-                for (int i=0;i<10;i++){
-                    c = i;
-                    pom.x = d.x + c.x;
-                    //std::cout << "Proba boba: " << pom.x << "\n";
-                    //std::cout << "S je: " << s.x << "\n";
-                    pom = s - pom*c;
-                    //std::cout << "Rezultati: " << pom.x << "\n";
-                    if (pom.x=="0"){
-                        y.x+=std::to_string(i);
-                        //std::cout << "HEHE BOI" << i << "\n";
-                        break;
-                    }
-                    if (neg(pom)){
-                        y.x+=std::to_string(i-1);
-                        break;
-                    }
-                }
+                std::cout << "Eve ga:" << y.x << "\n";
+                odd = false;
             }
             
-            std::cout<< "Eve ga: " << y.x; // messy i dalje ali naguzili smo za 625
+            //std::cout<< "Eve ga: " << y.x; // messy i dalje ali naguzili smo za 625
             // kad iskoristimo sve cifre dopisujemo po par nula i onda prelazimo u decimalni deo, ovo nas ne interesuje.
             // imamo dva izbora, ispisati aproksimaciju ili izbaciti gresku ako ostatak nije nula nakon svih cifri istrosenih
             /*BIG prase = s%d;
@@ -633,13 +643,16 @@
         z.print();
         std::cout << "^\n";
         
-        for (int i=11;i<31;i++){
+        z = 1225;
+        z.sqrt();
+        /*
+        for (int i=10;i<40;i++){
             int a = i*i;
             std::cout << "a: " << a << "\n";
             z = a;
             z.sqrt();
             std::cout << " sqrt\n";
-        }
+        }*/
     
         
         return 0;

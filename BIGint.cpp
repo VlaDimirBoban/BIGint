@@ -537,7 +537,7 @@
                 odd = true;
             
             while (i<length()){
-                std::cout << "\n\n\n UPAD BATICE \n\n\n";
+                //std::cout << "\n\n\n UPAD BATICE \n\n\n";
                 if (odd){
                     s.x+=x.at(i);
                     i++;
@@ -549,57 +549,62 @@
                     i++; 
                 }
                 
-                std::cout << s.x << "\n";
                 
                 if (first){
-                    std::cout << "Polecemo!" << "\n";
                     for (int i=1;i<10;i++){
                             d = i;
                             d = d^2;
                             if (neg(s-d)){
                                 pom = s-d;
-                                //std::cout << d.x << "\n";
-                                //std::cout << "Upad\n";
-                                //std::cout << pom.x << "\n";
                                 d = (i-1);
-                                std::cout << "dick je: " << d.x << "\n";
                                 y = d;
                                 c = d*d;
                                 s = s - c; // ono sto se deli
-                                d = d + d;
                                 first = false;
                                 break;
                             }
+                            else if (i==9) {
+                                d = i;
+                                y = d;
+                                c = d*d;
+                                s = s - c;
+                                first = false;
+                            }
                     }
+                    d = d + d;
                 }
                 else{
-                    
-                    std::cout << "C: " << c.x << "\n";
-                    std::cout << "s: " << s.x << "\n";
-                    
+
                     s.Zero();
-                    std::cout << "S je: " << s.x << "\n";
+                    //std::cout << "S je: " << s.x << "\n";
                 
                     
                     for (int i=0;i<10;i++){
                         c = i;
                         pom.x = d.x + c.x;
-                        std::cout << "OG : " << pom.x << "\n";
-                        std::cout << "S je: " << s.x << "\n";
+                        //std::cout << "OG : " << pom.x << "\n";
+                        //std::cout << "S je: " << s.x << "\n";
                         pom = pom*c;
-                        std::cout << "S je: " << s.x << "\n";
-                        std::cout << "Proba boba: " << pom.x << "\n";
+                        //std::cout << "S je: " << s.x << "\n";
+                        //std::cout << "Proba boba: " << pom.x << "\n";
                         pom = s - pom;
-                        std::cout << "Rezultati: " << pom.x << "\n";
+                        //std::cout << "Rezultati: " << pom.x << "\n";
                         if (pom.x=="0"){
                             y.x+=std::to_string(i);
+                            wtf = "0";
                             //std::cout << "HEHE BOI" << i << "\n";
                             break;
                         }
                         if (neg(pom)){
+                            //if (!i)
+                                //y.x+="0";
                             y.x+=std::to_string(i-1);
                             c = i-1;
                             break;
+                        }
+                        if (i==9){
+                            y.x+=std::to_string(i);
+                            c = i;
                         }
                         wtf = pom;
                     }
@@ -607,22 +612,16 @@
                     s = wtf;
                     pom.x = d.x + c.x;
                     d = pom + c;
-                    std::cout << "Deljenik sledeci: " << pom.x << "\n";
-                    std::cout << "OVO TRAZIMO " << wtf.x << "\n";
+                    //std::cout << "Deljenik sledeci: " << pom.x << "\n";
+                    //std::cout << "OVO TRAZIMO " << wtf.x << "\n";
 
                 }
                 
                 odd = false;
             }
             
-            std::cout << "Eve ga:" << y.x << "\n";
-            
-            // kad iskoristimo sve cifre dopisujemo po par nula i onda prelazimo u decimalni deo, ovo nas ne interesuje.
-            // imamo dva izbora, ispisati aproksimaciju ili izbaciti gresku ako ostatak nije nula nakon svih cifri istrosenih
-            /*BIG prase = s%d;
-            if (prase.zero())
-                return y;
-            else "Znaci zajebi me tebronije molim te\n";*/
+            std::cout << "Eve ga: " << y.x << "\n";
+            return y;
         }
         
     };
@@ -655,17 +654,19 @@
         z.print();
         std::cout << "^\n";
         
-        z = 278784;
+        z = 37249;
         z.sqrt();
-        /*
-        for (int i=10;i<40;i++){
+        std::cout << "\n";
+        
+        
+        for (int i=1;i<201;i++){
             int a = i*i;
-            std::cout << "a: " << a << "\n";
+            std::cout << "a: " << a << " sqrt";
             z = a;
             z.sqrt();
-            std::cout << " sqrt\n";
-        }*/
-    
+            std::cout << "\n";
+        }
+        
         
         return 0;
     }

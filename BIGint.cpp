@@ -18,8 +18,8 @@
             std::cout << x << " ";
         }
         
-        void length(){
-            std::cout << x.size() << "\n";
+        int length(){
+            return x.size();
         }
         bool neg(BIG a){
             if (a.x.at(0)=='-')
@@ -83,6 +83,14 @@
                 }
             }
             
+        }
+        
+        void Zero(){
+            if (x.size()>1)
+                if (x.at(0)=='0'){
+                    //std::cout << "Znaci radim nesto tebro\n";
+                    x.erase(x.begin()+0);
+                }
         }
         
         void operator=(std::string a){
@@ -426,6 +434,12 @@
             return y;
         }
         
+        /*bool zero(){
+            if (x=="0")
+                return true;
+            else return false;
+        }*/
+        
         // TO DO:
         
         // modulo
@@ -489,7 +503,6 @@
             return y;
             
         }
-        
         // raise to the power
         BIG operator^(int a){
             BIG y = *this;
@@ -511,13 +524,90 @@
             this->x+=std::to_string(a%i);
             std::reverse(this->x.begin(),this->x.end());
         }
-        // square root
+        // square root || Cringerana
+        BIG sqrt(){
+            // podelimo broj na parove s'desna na levo || NICE
+            int i = 0;
+            bool odd = false;
+            BIG s,d,c;
+            BIG pom;
+            BIG y;
+            
+            if (length()%2)
+                odd = true;
+            
+            while (i<length()){
+                if (odd){
+                    s.x+=x.at(i);
+                    odd = false;
+                    i++;
+                    for (int i=1;i<10;i++){
+                    d = i;
+                    d = d^2;
+                    if (neg(s-d)){
+                            pom = s-d;
+                            //std::cout << d.x << "\n";
+                            //std::cout << "Upad\n";
+                            //std::cout << pom.x << "\n";
+                            d = (i-1);
+                            //std::cout << "dick je: " << d.x << "\n";
+                            y = d;
+                            break;
+                        }
+                    }
+                }
+                c = d*d;
+                //std::cout << "Dick squared " << d.x << "\n";
+                s = s - c; // ono sto se deli
+                //std::cout << "S je: " << s.x << "\n";
+                // S/(broj ciji je kvadrat <= s; znaci od 1-9) || cirkus za sad, chill
+                // delimo brojem ciji je kvadrat manji ili jednak sa prvim parom
+                // saberemo delitelj i koeficijent, dodamo jednu cifru na dupe koja je ista sa sledecim koeficijentom
+                // ponovimo proces.
+                
+                s.x+=x.at(i);
+                i++;
+                s.x+=x.at(i);
+                i++;
+                
+                s.Zero();
+                //std::cout << "S je: " << s.x << "\n";
+                
+                d = d + y;
+                
+                for (int i=0;i<10;i++){
+                    c = i;
+                    pom.x = d.x + c.x;
+                    //std::cout << "Proba boba: " << pom.x << "\n";
+                    //std::cout << "S je: " << s.x << "\n";
+                    pom = s - pom*c;
+                    //std::cout << "Rezultati: " << pom.x << "\n";
+                    if (pom.x=="0"){
+                        y.x+=std::to_string(i);
+                        //std::cout << "HEHE BOI" << i << "\n";
+                        break;
+                    }
+                    if (neg(pom)){
+                        y.x+=std::to_string(i-1);
+                        break;
+                    }
+                }
+            }
+            
+            std::cout<< "Eve ga: " << y.x; // messy i dalje ali naguzili smo za 625
+            // kad iskoristimo sve cifre dopisujemo po par nula i onda prelazimo u decimalni deo, ovo nas ne interesuje.
+            // imamo dva izbora, ispisati aproksimaciju ili izbaciti gresku ako ostatak nije nula nakon svih cifri istrosenih
+            /*BIG prase = s%d;
+            if (prase.zero())
+                return y;
+            else "Znaci zajebi me tebronije molim te\n";*/
+        }
         
     };
     
     int main() {
-        BIG x {"256"};
-        BIG y {"-13"};
+        BIG x {"225"};
+        BIG y {"184"};
         BIG c {"-2"};
         
         BIG z;
@@ -543,9 +633,14 @@
         z.print();
         std::cout << "^\n";
         
-        z = 21343;
-        z.print();
-        std::cout << "int -> BIGint\n";
+        for (int i=11;i<31;i++){
+            int a = i*i;
+            std::cout << "a: " << a << "\n";
+            z = a;
+            z.sqrt();
+            std::cout << " sqrt\n";
+        }
+    
         
         return 0;
     }

@@ -528,15 +528,16 @@
         BIG sqrt(){
             // podelimo broj na parove s'desna na levo || NICE
             int i = 0;
-            bool odd = false;
+            bool odd = false, first = true;
             BIG s,d,c;
-            BIG pom;
+            BIG pom,wtf;
             BIG y;
             
             if (length()%2)
                 odd = true;
             
             while (i<length()){
+                std::cout << "\n\n\n UPAD BATICE \n\n\n";
                 if (odd){
                     s.x+=x.at(i);
                     i++;
@@ -550,9 +551,9 @@
                 
                 std::cout << s.x << "\n";
                 
-                if (s.length()<3){
+                if (first){
+                    std::cout << "Polecemo!" << "\n";
                     for (int i=1;i<10;i++){
-                        std::cout << "Polecemo!" << "\n";
                             d = i;
                             d = d^2;
                             if (neg(s-d)){
@@ -561,10 +562,12 @@
                                 //std::cout << "Upad\n";
                                 //std::cout << pom.x << "\n";
                                 d = (i-1);
-                                //std::cout << "dick je: " << d.x << "\n";
+                                std::cout << "dick je: " << d.x << "\n";
                                 y = d;
                                 c = d*d;
                                 s = s - c; // ono sto se deli
+                                d = d + d;
+                                first = false;
                                 break;
                             }
                     }
@@ -576,18 +579,18 @@
                     
                     s.Zero();
                     std::cout << "S je: " << s.x << "\n";
-                    
-                    if (i)
-                    d = d + y;
-                    
+                
                     
                     for (int i=0;i<10;i++){
                         c = i;
                         pom.x = d.x + c.x;
-                        //std::cout << "Proba boba: " << pom.x << "\n";
-                        //std::cout << "S je: " << s.x << "\n";
-                        pom = s - pom*c;
-                        //std::cout << "Rezultati: " << pom.x << "\n";
+                        std::cout << "OG : " << pom.x << "\n";
+                        std::cout << "S je: " << s.x << "\n";
+                        pom = pom*c;
+                        std::cout << "S je: " << s.x << "\n";
+                        std::cout << "Proba boba: " << pom.x << "\n";
+                        pom = s - pom;
+                        std::cout << "Rezultati: " << pom.x << "\n";
                         if (pom.x=="0"){
                             y.x+=std::to_string(i);
                             //std::cout << "HEHE BOI" << i << "\n";
@@ -595,16 +598,25 @@
                         }
                         if (neg(pom)){
                             y.x+=std::to_string(i-1);
+                            c = i-1;
                             break;
                         }
+                        wtf = pom;
                     }
+                    
+                    s = wtf;
+                    pom.x = d.x + c.x;
+                    d = pom + c;
+                    std::cout << "Deljenik sledeci: " << pom.x << "\n";
+                    std::cout << "OVO TRAZIMO " << wtf.x << "\n";
+
                 }
                 
-                std::cout << "Eve ga:" << y.x << "\n";
                 odd = false;
             }
             
-            //std::cout<< "Eve ga: " << y.x; // messy i dalje ali naguzili smo za 625
+            std::cout << "Eve ga:" << y.x << "\n";
+            
             // kad iskoristimo sve cifre dopisujemo po par nula i onda prelazimo u decimalni deo, ovo nas ne interesuje.
             // imamo dva izbora, ispisati aproksimaciju ili izbaciti gresku ako ostatak nije nula nakon svih cifri istrosenih
             /*BIG prase = s%d;
@@ -617,7 +629,7 @@
     
     int main() {
         BIG x {"225"};
-        BIG y {"184"};
+        BIG y {"129"};
         BIG c {"-2"};
         
         BIG z;
@@ -643,7 +655,7 @@
         z.print();
         std::cout << "^\n";
         
-        z = 1225;
+        z = 278784;
         z.sqrt();
         /*
         for (int i=10;i<40;i++){

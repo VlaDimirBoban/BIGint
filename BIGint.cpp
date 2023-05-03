@@ -3,8 +3,6 @@
     #include <vector>
     #include <algorithm>
     
-    // BRDO std::cout-ova sam koristio za brzo nalazenje gresaka, plus me mrzi da palim VSCODE i debugger
-    // sve sto ne zahteva rad sa fajlovima radim preko online compilera kek. Alfa chad bobi <3 <3 <3
 
     class BIG{
         std::string x;
@@ -18,8 +16,8 @@
             std::cout << x << " ";
         }
         
-        void length(){
-            std::cout << x.size() << "\n";
+        int length(){
+            return x.size();
         }
         bool neg(BIG a){
             if (a.x.at(0)=='-')
@@ -83,6 +81,14 @@
                 }
             }
             
+        }
+        
+        void Zero(){
+            if (x.size()>1)
+                if (x.at(0)=='0'){
+                    //std::cout << "Znaci radim nesto tebro\n";
+                    x.erase(x.begin()+0);
+                }
         }
         
         void operator=(std::string a){
@@ -424,28 +430,197 @@
 
 
             return y;
-        }
-        
-        // TO DO:
+        }    
         
         // modulo
-        
-        
-        // rais to the power
-        // square root
+        BIG operator%(BIG a){
+            BIG y,s,tmp,pom;
+            
+            BIG pro;
+            
+            int i = 0;
+            bool dali = false;
+    
+            
+            if (a.x == "0"){
+                std::cout << "Smooth move, but i'm afraid we cannot divide by zero...\n";
+                return y;
+            }
+            
+            if (neg()!=neg(a.x)){
+                strip();
+                a.strip();
+            }
+            
+            while (true){
+                if (i>this->x.size()-1)
+                    break;
+                
+                s.x+=this->x.at(i);
+                
+                
+                tmp.x.clear();
+
+                for (int j=1;j<=9;j++){
+                    pom.x=std::to_string(j);
+                    pro = a*pom;
+                    if(neg(s-pro)){
+                        break;
+                    }
+                    else {
+                        tmp=std::to_string(j);
+                        dali = true;
+                    }
+                }
+                if (dali) {
+                    s = s-a*tmp;
+                    dali = false;
+                }
+                
+                i++;
+                    
+            }
+            
+            y=s;
+            
+            unstrip();
+            a.unstrip();
+            
+            if (y.x.size()>1)
+                if (y.x.at(0)=='0')
+                    y.x.erase(y.x.begin()+0);
+
+            return y;
+            
+        }
+        // raise to the power
+        BIG operator^(int a){
+            BIG y = *this;
+                
+            for(int i=0;i<a-1;i++)
+                y = y*(*this);
+            
+            return y;
+        }
         // Convert an integer to a big integer.
+        void operator=(int a){
+            this->x.clear();
+            
+            int b = a;
+            int i = 10;
+            if (a<0){
+                b = a * -1;
+            }
+            while (b/i){
+                this->x+=std::to_string(b%i);
+                b = b/i;
+            }
+            this->x+=std::to_string(b%i);
+            if (a<0)
+                this->x+="-";
+            std::reverse(this->x.begin(),this->x.end());
+        }
+        // square root || Cringerana
+        BIG sqrt(){
+            int i = 0;
+            bool odd = false, first = true;
+            BIG s,d,c;
+            BIG pom,wtf;
+            BIG y;
+            
+            if (neg())
+                strip();
+            
+            if (length()%2)
+                odd = true;
+            
+            while (i<length()){
+                if (odd){
+                    s.x+=x.at(i);
+                    i++;
+                }
+                else {
+                    s.x+=x.at(i);
+                    i++;
+                    s.x+=x.at(i);
+                    i++; 
+                }
+                
+                
+                if (first){
+                    for (int i=1;i<10;i++){
+                            d = i;
+                            d = d^2;
+                            if (neg(s-d)){
+                                pom = s-d;
+                                d = (i-1);
+                                y = d;
+                                c = d*d;
+                                s = s - c; // ono sto se deli
+                                first = false;
+                                break;
+                            }
+                            else if (i==9) {
+                                d = i;
+                                y = d;
+                                c = d*d;
+                                s = s - c;
+                                first = false;
+                            }
+                    }
+                    d = d + d;
+                }
+                else{
+
+                    s.Zero();
+                    
+                    for (int i=0;i<10;i++){
+                        c = i;
+                        pom.x = d.x + c.x;
+                        pom = pom*c;
+                        pom = s - pom;
+                        if (pom.x=="0"){
+                            y.x+=std::to_string(i);
+                            wtf = "0";
+                            break;
+                        }
+                        if (neg(pom)){
+                            //if (!i)
+                                //y.x+="0";
+                            y.x+=std::to_string(i-1);
+                            c = i-1;
+                            break;
+                        }
+                        if (i==9){
+                            y.x+=std::to_string(i);
+                            c = i;
+                        }
+                        wtf = pom;
+                    }
+                    
+                    s = wtf;
+                    pom.x = d.x + c.x;
+                    d = pom + c;
+
+                }
+                
+                odd = false;
+            }
+            
+            std::cout << "Eve ga: " << y.x << "\n";
+            
+            unstrip();
+            return y;
+        }
         
     };
     
-
-    
     int main() {
-        BIG x {"256"};
-        BIG y {"-13"};
-        
+        BIG x {"225"};
+        BIG y {"129"};
+        BIG c {"-2"};
         
         BIG z;
-
 
         z = x + y;
         z.print();
@@ -460,8 +635,28 @@
         z.print();
         std::cout << "/\n";
         
-
-
-    
+        z = x % y;
+        z.print();
+        std::cout << "%\n";
+        
+        z = c^3;
+        z.print();
+        std::cout << "^\n";
+        
+        
+        z = "4878044649";
+        z.sqrt();
+        std::cout << "\n";
+        
+        /*
+        for (int i=1000;i<1200;i++){
+            int a = i*i;
+            std::cout << "a: " << a << " sqrt";
+            z = a;
+            z.sqrt();
+            std::cout << "\n";
+        }*/
+        
+        
         return 0;
     }

@@ -506,22 +506,29 @@
         // raise to the power
         BIG operator^(int a){
             BIG y = *this;
-            bool sign = false;
-            
+                
             for(int i=0;i<a-1;i++)
                 y = y*(*this);
+            
             return y;
         }
         // Convert an integer to a big integer.
+        // ovde je problem negde sad o.o jbm li ga sta sam usrao.
         void operator=(int a){
             this->x.clear();
-            int i = 10, b;
-            while (a/i){
-                this->x+=std::to_string(a%i);
-                a = a/i;
-                //std::cout << a << "\n";
+            
+            int b = a;
+            int i = 10;
+            if (a<0){
+                b = a * -1;
             }
-            this->x+=std::to_string(a%i);
+            while (b/i){
+                this->x+=std::to_string(b%i);
+                b = b/i;
+            }
+            this->x+=std::to_string(b%i);
+            if (a<0)
+                this->x+="-";
             std::reverse(this->x.begin(),this->x.end());
         }
         // square root || Cringerana
@@ -532,6 +539,9 @@
             BIG s,d,c;
             BIG pom,wtf;
             BIG y;
+            
+            if (neg())
+                strip();
             
             if (length()%2)
                 odd = true;
@@ -621,6 +631,8 @@
             }
             
             std::cout << "Eve ga: " << y.x << "\n";
+            
+            unstrip();
             return y;
         }
         
@@ -650,16 +662,20 @@
         z.print();
         std::cout << "%\n";
         
-        z = c^16;
+        z = c^3;
         z.print();
         std::cout << "^\n";
         
-        z = 37249;
+        
+        z = -37249;
+        z.print();
+        std::cout << "\n";
+        
         z.sqrt();
         std::cout << "\n";
         
         
-        for (int i=1;i<201;i++){
+        for (int i=1;i<501;i++){
             int a = i*i;
             std::cout << "a: " << a << " sqrt";
             z = a;

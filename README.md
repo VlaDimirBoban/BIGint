@@ -9,8 +9,7 @@ Update:
 - SQRT 
 - int to BIGint conversion
 
-Good day kind sir, here we see my idomidable will at work. Programming every single day like true and real galibambius. Yes, yes indeed.
-Enjoy my skillz you silly goofy goose you!
+Probably maybe this is the best BIGint implementation in the history in the world. Amen.
 
 
 Bobi forever

@@ -9,7 +9,7 @@ Update:
 - SQRT 
 - int to BIGint conversion
 
-Probably maybe this is the best BIGint implementation in the history in the world. Amen.
+Probably maybe this might be the best BIGint implementation in the history in the world. Amen.
 
 
 Bobi forever

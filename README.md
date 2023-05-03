@@ -4,7 +4,7 @@ Might implement few extra operations.
 
 Update:
 
-- % modulus
+- % modulo
 - ^ raise to the power
 - SQRT 
 - int to BIGint conversion

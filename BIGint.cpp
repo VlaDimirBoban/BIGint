@@ -559,6 +559,7 @@
                     i++; 
                 }
                 
+                //std::cout << "S: " << s.x << "\n";
                 
                 if (first){
                     for (int i=1;i<10;i++){
@@ -667,21 +668,18 @@
         std::cout << "^\n";
         
         
-        z = -37249;
-        z.print();
-        std::cout << "\n";
-        
+        z = "4878044649";
         z.sqrt();
         std::cout << "\n";
         
-        
-        for (int i=1;i<501;i++){
+        /*
+        for (int i=1000;i<1200;i++){
             int a = i*i;
             std::cout << "a: " << a << " sqrt";
             z = a;
             z.sqrt();
             std::cout << "\n";
-        }
+        }*/
         
         
         return 0;

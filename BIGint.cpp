@@ -607,7 +607,7 @@
                 odd = false;
             }
             
-            std::cout << "Eve ga: " << y.x << "\n";
+            std::cout << "SQRT: " << y.x << "\n";
             
             unstrip();
             return y;

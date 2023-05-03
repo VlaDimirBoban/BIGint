@@ -3,7 +3,7 @@ Daily c++ pracitce this time consiting of a custom infinte integer type implemen
 Might implement few extra operations.
 
 Update:
-In the experimental branch i'm testing the following:
+
 - % modulus
 - ^ raise to the power
 - SQRT 

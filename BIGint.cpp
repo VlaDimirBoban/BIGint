@@ -3,6 +3,8 @@
     #include <vector>
     #include <algorithm>
     
+    // BRDO std::cout-ova sam koristio za brzo nalazenje gresaka, plus me mrzi da palim VSCODE i debugger
+    // sve sto ne zahteva rad sa fajlovima radim preko online compilera kek. Alfa chad bobi <3 <3 <3
 
     class BIG{
         std::string x;
@@ -430,7 +432,15 @@
 
 
             return y;
-        }    
+        }
+        
+        /*bool zero(){
+            if (x=="0")
+                return true;
+            else return false;
+        }*/
+        
+        // TO DO:
         
         // modulo
         BIG operator%(BIG a){
@@ -447,7 +457,7 @@
                 return y;
             }
             
-            if (neg()!=neg(a.x)){
+            if (neg()||neg(a.x)){
                 strip();
                 a.strip();
             }
@@ -503,6 +513,7 @@
             return y;
         }
         // Convert an integer to a big integer.
+        // ovde je problem negde sad o.o jbm li ga sta sam usrao.
         void operator=(int a){
             this->x.clear();
             
@@ -522,6 +533,7 @@
         }
         // square root || Cringerana
         BIG sqrt(){
+            // podelimo broj na parove s'desna na levo || NICE
             int i = 0;
             bool odd = false, first = true;
             BIG s,d,c;
@@ -535,6 +547,7 @@
                 odd = true;
             
             while (i<length()){
+                //std::cout << "\n\n\n UPAD BATICE \n\n\n";
                 if (odd){
                     s.x+=x.at(i);
                     i++;
@@ -546,6 +559,7 @@
                     i++; 
                 }
                 
+                //std::cout << "S: " << s.x << "\n";
                 
                 if (first){
                     for (int i=1;i<10;i++){
@@ -573,15 +587,23 @@
                 else{
 
                     s.Zero();
+                    //std::cout << "S je: " << s.x << "\n";
+                
                     
                     for (int i=0;i<10;i++){
                         c = i;
                         pom.x = d.x + c.x;
+                        //std::cout << "OG : " << pom.x << "\n";
+                        //std::cout << "S je: " << s.x << "\n";
                         pom = pom*c;
+                        //std::cout << "S je: " << s.x << "\n";
+                        //std::cout << "Proba boba: " << pom.x << "\n";
                         pom = s - pom;
+                        //std::cout << "Rezultati: " << pom.x << "\n";
                         if (pom.x=="0"){
                             y.x+=std::to_string(i);
                             wtf = "0";
+                            //std::cout << "HEHE BOI" << i << "\n";
                             break;
                         }
                         if (neg(pom)){
@@ -601,13 +623,15 @@
                     s = wtf;
                     pom.x = d.x + c.x;
                     d = pom + c;
+                    //std::cout << "Deljenik sledeci: " << pom.x << "\n";
+                    //std::cout << "OVO TRAZIMO " << wtf.x << "\n";
 
                 }
                 
                 odd = false;
             }
             
-            std::cout << "SQRT: " << y.x << "\n";
+            std::cout << "Eve ga: " << y.x << "\n";
             
             unstrip();
             return y;
@@ -616,8 +640,8 @@
     };
     
     int main() {
-        BIG x {"225"};
-        BIG y {"129"};
+        BIG x {"-225"};
+        BIG y {"-129"};
         BIG c {"-2"};
         
         BIG z;
